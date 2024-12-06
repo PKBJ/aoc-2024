@@ -18,8 +18,6 @@ fun main() {
     println(part2(input))
 }
 
-private fun List<String>.map(): Map = Map(map { line -> line.map { it } })
-
 private fun calculatePartOne(input: List<String>): Int =
     input.map().traverse().distinctBy { it.cord }.count()
 
@@ -43,25 +41,27 @@ private fun calculatePartTwo(input: List<String>): Int {
         }
 }
 
+private fun List<String>.map(): Map = Map(map { line -> line.map { it } })
+
 private fun Map.traverse(forceBlock: Cord? = null): List<Step> {
     var curStep = startStep
     val traversedSteps: MutableList<Step> = mutableListOf()
     var continueTraversing = true
 
     while (continueTraversing) {
-        val nextStep = curStep.getNextStep()
+        val nextStep = curStep.nextStep()
         when {
             traversedSteps.contains(curStep) -> {
                 traversedSteps.add(curStep)
                 continueTraversing = false
             }
 
-            isOutOfBounds(nextStep) -> {
+            nextStep.isOutOfBounds() -> {
                 traversedSteps.add(curStep)
                 continueTraversing = false
             }
 
-            isBlockedOnMap(nextStep) || nextStep.cord == forceBlock -> curStep = curStep.updateDirection()
+            nextStep.isBlockedOnMap() || nextStep.cord == forceBlock -> curStep = curStep.updateDirection()
 
             else -> {
                 traversedSteps.add(curStep)
@@ -90,7 +90,7 @@ private fun Step.updateDirection(): Step = copy(
     }
 )
 
-private fun Step.getNextStep(): Step = Step(
+private fun Step.nextStep(): Step = Step(
     cord = Cord(
         x = when (direction) {
             Direction.Up -> cord.x
@@ -113,16 +113,14 @@ private data class Map(
 ) {
     val startStep: Step = map
         .indexOfFirst { lines -> lines.contains('^') }
-        .let {
+        .let { y ->
+            val x = map[y].indexOfFirst { it == '^' }
             Step(
-                cord = Cord(
-                    x = map[it].indexOfFirst { it == '^' },
-                    y = it,
-                ),
+                cord = Cord(x = x, y = y),
                 direction = Direction.Up
             )
         }
 
-    fun isOutOfBounds(step: Step) = step.cord.x !in 0..<map[0].size || step.cord.y !in 0..<map[0].size
-    fun isBlockedOnMap(step: Step) = map[step.cord.y][step.cord.x] == '#'
+    fun Step.isOutOfBounds() = cord.x !in 0..<map[0].size || cord.y !in 0..<map[0].size
+    fun Step.isBlockedOnMap() = map[cord.y][cord.x] == '#'
 }
