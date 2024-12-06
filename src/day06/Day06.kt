@@ -23,10 +23,10 @@ private fun calculatePartOne(input: List<String>): Int =
 
 private fun calculatePartTwo(input: List<String>): Int {
     val map = input.map()
-    val originalTraversedSteps = map.traverse()
+    val originalSteps = map.traverse()
     val alreadyBlockedCoords: MutableList<Cord> = mutableListOf()
 
-    return originalTraversedSteps
+    return originalSteps
         .count { step ->
             if (
                 step.cord != map.startStep.cord &&
@@ -45,32 +45,32 @@ private fun List<String>.map(): Map = Map(map { line -> line.map { it } })
 
 private fun Map.traverse(forceBlock: Cord? = null): List<Step> {
     var curStep = startStep
-    val traversedSteps: MutableList<Step> = mutableListOf()
+    val steps: MutableList<Step> = mutableListOf()
     var continueTraversing = true
 
     while (continueTraversing) {
         val nextStep = curStep.nextStep()
         when {
-            traversedSteps.contains(curStep) -> {
-                traversedSteps.add(curStep)
+            steps.contains(curStep) -> {
+                steps.add(curStep)
                 continueTraversing = false
             }
 
             nextStep.isOutOfBounds() -> {
-                traversedSteps.add(curStep)
+                steps.add(curStep)
                 continueTraversing = false
             }
 
             nextStep.isBlockedOnMap() || nextStep.cord == forceBlock -> curStep = curStep.updateDirection()
 
             else -> {
-                traversedSteps.add(curStep)
+                steps.add(curStep)
                 curStep = nextStep
             }
         }
     }
 
-    return traversedSteps
+    return steps
 }
 
 private enum class Direction {
