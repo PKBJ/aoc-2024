@@ -6,10 +6,9 @@ fun main() {
     fun part1(input: List<String>): Int = calculatePartOne(input)
     fun part2(input: List<String>): Int = calculatePartTwo(input)
 
-    val testInputPart1 = readInput(name = "Day06_test_part", "day06")
-    check(part1(testInputPart1) == 41)
-    val testInputPart2 = readInput(name = "Day06_test_part", "day06")
-    check(part2(testInputPart2) == 6)
+    val testInputPart = readInput(name = "Day06_test_part", "day06")
+    check(part1(testInputPart) == 41)
+    check(part2(testInputPart) == 6)
 
     val input = readInput(name = "Day06", "day06")
     println("=== Part 1 ===")

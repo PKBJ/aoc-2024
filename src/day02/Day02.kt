@@ -7,10 +7,9 @@ fun main() {
     fun part1(input: List<String>): Int = countSafeReports(input)
     fun part2(input: List<String>): Int = countSafeReportsIfToleratingOneBadLevel(input)
 
-    val testInputPart1 = readInput(name = "Day02_test_part", "day02")
-    check(part1(testInputPart1) == 2)
-    val testInputPart2 = readInput(name = "Day02_test_part", "day02")
-    check(part2(testInputPart2) == 4)
+    val testInputPart = readInput(name = "Day02_test_part", "day02")
+    check(part1(testInputPart) == 2)
+    check(part2(testInputPart) == 4)
 
     val input = readInput(name = "Day02", "day02")
     println("=== Part 1 ===")

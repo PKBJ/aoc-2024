@@ -6,10 +6,9 @@ fun main() {
     fun part1(input: List<String>): Int = countXMAS(input)
     fun part2(input: List<String>): Int = `countX-MAS`(input)
 
-    val testInputPart1 = readInput(name = "Day04_test_part", "day04")
-    check(part1(testInputPart1) == 18)
-    val testInputPart2 = readInput(name = "Day04_test_part", "day04")
-    check(part2(testInputPart2) == 9)
+    val testInputPart = readInput(name = "Day04_test_part", "day04")
+    check(part1(testInputPart) == 18)
+    check(part2(testInputPart) == 9)
 
     val input = readInput(name = "Day04", "day04")
     println("=== Part 1 ===")

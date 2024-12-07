@@ -7,10 +7,9 @@ fun main() {
     fun part1(input: List<String>): Int = calculateTotalDistance(input)
     fun part2(input: List<String>): Int = calculateSimilarityScore(input)
 
-    val testInputPart1 = readInput(name = "Day01_test_part", "day01")
-    check(part1(testInputPart1) == 11)
-    val testInputPart2 = readInput(name = "Day01_test_part", "day01")
-    check(part2(testInputPart2) == 31)
+    val testInputPart = readInput(name = "Day01_test_part", "day01")
+    check(part1(testInputPart) == 11)
+    check(part2(testInputPart) == 31)
 
     val input = readInput(name = "Day01", "day01")
     println("=== Part 1 ===")
